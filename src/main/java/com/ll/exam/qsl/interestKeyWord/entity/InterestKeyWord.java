@@ -10,23 +10,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class InterestKeyWord {
     @Id
+    @EqualsAndHashCode.Include
     private String content;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InterestKeyWord)) return false;
-
-        InterestKeyWord that = (InterestKeyWord) o;
-
-        return content.equals(that.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return content.hashCode();
-    }
 }
 
