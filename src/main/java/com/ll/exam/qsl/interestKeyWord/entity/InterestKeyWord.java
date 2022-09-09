@@ -13,5 +13,20 @@ import javax.persistence.*;
 public class InterestKeyWord {
     @Id
     private String content;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InterestKeyWord)) return false;
+
+        InterestKeyWord that = (InterestKeyWord) o;
+
+        return content.equals(that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return content.hashCode();
+    }
 }
 

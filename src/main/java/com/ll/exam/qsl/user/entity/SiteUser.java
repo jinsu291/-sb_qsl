@@ -1,8 +1,11 @@
 package com.ll.exam.qsl.user.entity;
 
+import com.ll.exam.qsl.interestKeyWord.entity.InterestKeyWord;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -23,7 +26,11 @@ public class SiteUser {
     @Column(unique = true)
     private String email;
 
-    public void addInterestKeywordContent(String keywordContent) {
+    @Builder.Default
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<InterestKeyWord> interestKeyWords = new HashSet<>();
 
+    public void addInterestKeywordContent(String keywordContent) {
+        interestKeyWords.add(new InterestKeyWord(keywordContent));
     }
 }
