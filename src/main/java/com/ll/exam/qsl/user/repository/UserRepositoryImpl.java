@@ -15,6 +15,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
+import static com.ll.exam.qsl.interestKeyword.entity.QInterestKeyword.interestKeyword;
 import static com.ll.exam.qsl.user.entity.QSiteUser.siteUser;
 
 @RequiredArgsConstructor
@@ -111,13 +112,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
        WHERE IK.content = "축구";
        */
 
-        QInterestKeyword IK = new QInterestKeyword("IK");
-
         return jpaQueryFactory
                 .selectFrom(siteUser)
-                .innerJoin(siteUser.interestKeywords, IK)
+                .innerJoin(siteUser.interestKeywords, interestKeyword)
                 .where(
-                        IK.content.eq(keywordContent)
+                        interestKeyword.content.eq(keywordContent)
                 )
                 .fetch();
     }
