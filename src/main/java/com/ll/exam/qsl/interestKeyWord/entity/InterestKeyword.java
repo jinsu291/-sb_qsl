@@ -1,8 +1,9 @@
-package com.ll.exam.qsl.interestKeyWord.entity;
+package com.ll.exam.qsl.interestKeyword.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 @Setter
@@ -11,10 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class InterestKeyWord {
+public class InterestKeyword {
     @Id
     @EqualsAndHashCode.Include
     private String content;
-
 }
-

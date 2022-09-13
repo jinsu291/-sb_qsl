@@ -1,6 +1,6 @@
 package com.ll.exam.qsl.user.repository;
 
-import com.ll.exam.qsl.user.entity.QSiteUser;
+import com.ll.exam.qsl.interestKeyword.entity.QInterestKeyword;
 import com.ll.exam.qsl.user.entity.SiteUser;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -23,8 +23,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public SiteUser getQslUser(Long id) {
-
-
         return jpaQueryFactory
                 .select(siteUser)
                 .from(siteUser)
@@ -41,7 +39,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public SiteUser getQslUserOrderByIdAscLimitOne() {
+    public SiteUser getQslUserOrderByIdAscOne() {
         return jpaQueryFactory
                 .select(siteUser)
                 .from(siteUser)
@@ -85,7 +83,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder pathBuilder = new PathBuilder(siteUser.getType(), siteUser.getMetadata());
-            usersQuery.orderBy(new OrderSpecifier<>(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
+            usersQuery.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
         }
 
         List<SiteUser> users = usersQuery.fetch();
@@ -103,8 +101,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public List<SiteUser> getQslUsersByInterestKeyword(String keywordContent) {
-
-          /*
+        /*
        SELECT SU.*
        FROM site_user AS SU
        INNER JOIN site_user_interest_keywords AS SUIK
@@ -113,9 +110,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
        ON IK.content = SUIK.interest_keywords_content
        WHERE IK.content = "축구";
        */
+
+        QInterestKeyword IK = new QInterestKeyword("IK");
+
         return jpaQueryFactory
                 .selectFrom(siteUser)
-                .innerJoin(siteUser.interestKeywords)
+                .innerJoin(siteUser.interestKeywords, IK)
+                .where(
+                        IK.content.eq(keywordContent)
+                )
                 .fetch();
     }
 }

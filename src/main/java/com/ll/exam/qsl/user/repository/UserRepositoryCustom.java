@@ -11,7 +11,7 @@ public interface UserRepositoryCustom {
 
     long getQslCount();
 
-    SiteUser getQslUserOrderByIdAscLimitOne();
+    SiteUser getQslUserOrderByIdAscOne();
 
     List<SiteUser> getQslUsersOrderByIdAsc();
 

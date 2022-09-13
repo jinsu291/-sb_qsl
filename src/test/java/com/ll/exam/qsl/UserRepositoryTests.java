@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,7 +79,7 @@ class UserRepositoryTests {
 	@Test
 	@DisplayName("가장 오래된 회원 1명")
 	void t5() {
-		SiteUser u1 = userRepository.getQslUserOrderByIdAscLimitOne();
+		SiteUser u1 = userRepository.getQslUserOrderByIdAscOne();
 
 		assertThat(u1.getId()).isEqualTo(1L);
 		assertThat(u1.getUsername()).isEqualTo("user1");
@@ -142,7 +141,7 @@ class UserRepositoryTests {
 	void t8() {
 		long totalCount = userRepository.count();
 		int pageSize = 1; // 한 페이지에 보여줄 아이템 개수
-		int totalPages = (int)Math.ceil(totalCount / (double)pageSize);
+		int totalPages = (int) Math.ceil(totalCount / (double) pageSize);
 		int page = 1;
 		String kw = "user";
 
@@ -172,7 +171,7 @@ class UserRepositoryTests {
 	void t9() {
 		long totalCount = userRepository.count();
 		int pageSize = 1; // 한 페이지에 보여줄 아이템 개수
-		int totalPages = (int)Math.ceil(totalCount / (double)pageSize);
+		int totalPages = (int) Math.ceil(totalCount / (double) pageSize);
 		int page = 1;
 		String kw = "user";
 
@@ -205,7 +204,7 @@ class UserRepositoryTests {
 		u2.addInterestKeywordContent("축구");
 		u2.addInterestKeywordContent("롤");
 		u2.addInterestKeywordContent("헬스");
-		u2.addInterestKeywordContent("헬스");   // 중복등록은 무시
+		u2.addInterestKeywordContent("헬스"); // 중복등록은 무시
 
 		userRepository.save(u2);
 	}
